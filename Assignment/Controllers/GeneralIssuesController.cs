@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Assignment.Data;
 using Assignment.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment.Views.GeneralIssues
 {
+    [Authorize]
     public class GeneralIssuesController : Controller
     {
         private readonly ApplicationDbContext _context;
