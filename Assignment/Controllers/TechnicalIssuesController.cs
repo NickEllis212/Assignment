@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment.Views.TechnicalIssues
 {
-    [Authorize]
+    [Authorize(Roles = "ITManager")]
     public class TechnicalIssuesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -119,6 +119,7 @@ namespace Assignment.Views.TechnicalIssues
         }
 
         // GET: TechnicalIssues/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Assignment.Models
 {
-    public class StaffModel
+    public class ITStaffModel
     {
     }
 }
