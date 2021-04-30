@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment.Views.GeneralIssues
 {
-    [Authorize(Roles = "ITManager")]
-    [Authorize(Roles = "Teacher")]
+    //[Authorize(Roles = "ITManager")]
+   // [Authorize(Roles = "Teacher")]
     public class GeneralIssuesController : Controller
     {
         private readonly ApplicationDbContext _context;

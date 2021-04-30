@@ -68,6 +68,11 @@ namespace Assignment
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                    name: "ITManager",
+                    pattern: "{area=ITManager}/{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }
