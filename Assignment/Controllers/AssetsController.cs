@@ -9,25 +9,25 @@ using Assignment.Data;
 using Assignment.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Assignment.Views.GeneralIssues
+namespace Assignment.Views.Assets
 {
     [Authorize]
-    public class GeneralIssuesController : Controller
+    public class AssetsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public GeneralIssuesController(ApplicationDbContext context)
+        public AssetsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: GeneralIssues
+        // GET: Assets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GeneralIssues.ToListAsync());
+            return View(await _context.AssetsModel.ToListAsync());
         }
 
-        // GET: GeneralIssues/Details/5
+        // GET: Assets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,41 +35,39 @@ namespace Assignment.Views.GeneralIssues
                 return NotFound();
             }
 
-            var generalIssuesModel = await _context.GeneralIssues
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (generalIssuesModel == null)
+            var assetsModel = await _context.AssetsModel
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (assetsModel == null)
             {
                 return NotFound();
             }
 
-            return View(generalIssuesModel);
+            return View(assetsModel);
         }
 
-        // GET: GeneralIssues/Create
+        // GET: Assets/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: GeneralIssues/Create
+        // POST: Assets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,IssueName,IssueDetails,StaffName,Date")] GeneralIssuesModel generalIssuesModel)
+        public async Task<IActionResult> Create([Bind("Id,AssetName,AssetAmount")] AssetsModel assetsModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(generalIssuesModel);
+                _context.Add(assetsModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(generalIssuesModel);
+            return View(assetsModel);
         }
 
-        // GET: GeneralIssues/Edit/5
-        [Authorize(Roles = "ITManager, ITStaff")]
-        
+        // GET: Assets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +75,23 @@ namespace Assignment.Views.GeneralIssues
                 return NotFound();
             }
 
-            var generalIssuesModel = await _context.GeneralIssues.FindAsync(id);
-            if (generalIssuesModel == null)
+            var assetsModel = await _context.AssetsModel.FindAsync(id);
+            if (assetsModel == null)
             {
                 return NotFound();
             }
-            return View(generalIssuesModel);
+            return View(assetsModel);
         }
 
-        // POST: GeneralIssues/Edit/5
+        // POST: Assets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,IssueName,IssueDetails,StaffName,Date")] GeneralIssuesModel generalIssuesModel)
+        [Authorize(Roles = "ITManager, ITStaff")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AssetName,AssetAmount")] AssetsModel assetsModel)
         {
-            if (id != generalIssuesModel.ID)
+            if (id != assetsModel.Id)
             {
                 return NotFound();
             }
@@ -101,12 +100,12 @@ namespace Assignment.Views.GeneralIssues
             {
                 try
                 {
-                    _context.Update(generalIssuesModel);
+                    _context.Update(assetsModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GeneralIssuesModelExists(generalIssuesModel.ID))
+                    if (!AssetsModelExists(assetsModel.Id))
                     {
                         return NotFound();
                     }
@@ -117,11 +116,11 @@ namespace Assignment.Views.GeneralIssues
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(generalIssuesModel);
+            return View(assetsModel);
         }
 
-        // GET: GeneralIssues/Delete/5
-        [Authorize(Roles = "ITManager")]
+        // GET: Assets/Delete/5
+        [Authorize(Roles ="ITManager, ITStaff")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +128,30 @@ namespace Assignment.Views.GeneralIssues
                 return NotFound();
             }
 
-            var generalIssuesModel = await _context.GeneralIssues
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (generalIssuesModel == null)
+            var assetsModel = await _context.AssetsModel
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (assetsModel == null)
             {
                 return NotFound();
             }
 
-            return View(generalIssuesModel);
+            return View(assetsModel);
         }
 
-        // POST: GeneralIssues/Delete/5
+        // POST: Assets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var generalIssuesModel = await _context.GeneralIssues.FindAsync(id);
-            _context.GeneralIssues.Remove(generalIssuesModel);
+            var assetsModel = await _context.AssetsModel.FindAsync(id);
+            _context.AssetsModel.Remove(assetsModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GeneralIssuesModelExists(int id)
+        private bool AssetsModelExists(int id)
         {
-            return _context.GeneralIssues.Any(e => e.ID == id);
+            return _context.AssetsModel.Any(e => e.Id == id);
         }
     }
 }

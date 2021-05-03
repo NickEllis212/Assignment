@@ -14,6 +14,9 @@ namespace Assignment.Data
         public DbSet<TechnicalIssueModel> TechnicalIssue { get; set; }
 
         public DbSet<GeneralIssuesModel> GeneralIssues { get; set; }
+
+        public DbSet<AssetsModel> AssetsModel { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

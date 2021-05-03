@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment.Views.TechnicalIssues
 {
-    [Authorize(Roles = "ITManager")]
+    [Authorize]
     public class TechnicalIssuesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -88,6 +88,7 @@ namespace Assignment.Views.TechnicalIssues
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ITManager, ITStaff")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,IssueName,IssueDetails,StaffName,Assetseffected,Date")] TechnicalIssueModel technicalIssueModel)
         {
             if (id != technicalIssueModel.ID)
@@ -119,7 +120,7 @@ namespace Assignment.Views.TechnicalIssues
         }
 
         // GET: TechnicalIssues/Delete/5
-        [Authorize]
+        [Authorize(Roles ="ITManager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

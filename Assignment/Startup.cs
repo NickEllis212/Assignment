@@ -63,16 +63,27 @@ namespace Assignment
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
+
             {
+
+                
+
+                endpoints.MapControllerRoute(
+                   name: "ITManager",
+                   pattern: "{area:exists}/{controller=RolesManager}/{action=Index}/{id?}");
+
+
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+
                 endpoints.MapRazorPages();
 
-                endpoints.MapControllerRoute(
-                    name: "ITManager",
-                    pattern: "{area=ITManager}/{controller=Home}/{action=Index}/{id?}");
-                
+
+
             });
         }
     }
